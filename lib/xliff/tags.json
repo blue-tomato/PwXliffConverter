@@ -1,0 +1,9 @@
+{
+  "xmlStart": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+  "xliffStart": "<xliff xmlns=\"urn:oasis:names:tc:xliff:document:1.2\" version=\"1.2\">",
+  "xliffEnd": "</xliff>",
+  "fileStart": "<file  datatype=\"plaintext\" source-language=\"en\" target-language=\"de\">",
+  "fileEnd": "</file>",
+  "bodyStart": "<body>",
+  "bodyEnd": "</body>"
+}
