@@ -1,7 +1,7 @@
-import { unitMarkup, unitText } from './Item';
+import { unitMarkup, unitText } from './items';
 import xmlFormat from 'xml-formatter';
-import type { Item } from './Item';
-import tags from './tags.json';
+import tags from './tags/tags.json';
+import type { Item } from './items';
 import fs from 'fs';
 
 type Tag = {
@@ -40,7 +40,7 @@ const addTags = (tags: Tag[], content: string) => {
   return tags.length === 0 ? value : addTags(tags, value);
 };
 
-const converter = (input: string) => {
+const convertToXliff = (input: string) => {
   const data = fs.readFileSync(input, 'utf8');
   const parse = JSON.parse(data);
 
@@ -53,4 +53,4 @@ const converter = (input: string) => {
   return xmlFormat(addTags(xliffTags, items));
 };
 
-export default converter;
+export default convertToXliff;

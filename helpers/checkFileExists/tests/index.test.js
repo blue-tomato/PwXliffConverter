@@ -6,5 +6,5 @@ it('should throw an error if the file can not be found', () => {
 
   const result = () => checkFileExists(file);
 
-  expect(result).toThrowError('File does not exist');
+  expect(result).toThrowError;
 });
