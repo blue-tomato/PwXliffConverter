@@ -4,7 +4,11 @@
   "description": "Node.js CLI to convert ProcessWire JSON translation exports to XLIFF 1.2 and back",
   "main": "./app/index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc"
+  },
+  "bin": {
+    "pwcvt": "./app/index.js"
   },
   "repository": {
     "type": "git",
