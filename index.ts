@@ -7,7 +7,8 @@ import path from 'path';
 require('yargs')
   .command({
     command: 'convert',
-    describe: 'Takes a .json file and converts it to .xlf',
+    describe:
+      'Converts a ProcessWire translation export .json to .xlf 1.2 and back',
     builder: {
       file: {
         describe: 'input',
@@ -18,9 +19,10 @@ require('yargs')
     handler({ file }: { file: string }) {
       checkFileExists(file);
       const ext = path.extname(file);
-      const data = ext === '.json' ? convertToXliff(file) : convertToJson(file);
       const newExt = ext === '.json' ? '.xlf' : '.json';
+      const data = ext === '.json' ? convertToXliff(file) : convertToJson(file);
       const save = saveAsFile(file.replace(ext, newExt), data);
+
       if (save) console.log(colors.magenta('File saved successfully'));
     },
   })

@@ -1,37 +1,7 @@
-import { unitMarkup, unitText } from './items';
+import { unitMarkup, unitText, Item } from './items';
+import { xliffTags, Tag } from './tags';
 import xmlFormat from 'xml-formatter';
-import tags from './tags/tags.json';
-import type { Item } from './items';
 import fs from 'fs';
-
-type Tag = {
-  tag: string;
-  start: string;
-  end: string;
-};
-
-const xliffTags = [
-  {
-    tag: 'xml',
-    start: tags.xmlStart,
-    end: '',
-  },
-  {
-    tag: 'xliff',
-    start: tags.xliffStart,
-    end: tags.xliffEnd,
-  },
-  {
-    tag: 'file',
-    start: tags.fileStart,
-    end: tags.fileEnd,
-  },
-  {
-    tag: 'body',
-    start: tags.bodyStart,
-    end: tags.bodyEnd,
-  },
-];
 
 const addTags = (tags: Tag[], content: string) => {
   const tag = tags[tags.length - 1];
@@ -42,13 +12,20 @@ const addTags = (tags: Tag[], content: string) => {
 
 const convertToXliff = (input: string) => {
   const data = fs.readFileSync(input, 'utf8');
-  const parse = JSON.parse(data);
+  const parsed = JSON.parse(data);
 
-  const items = parse.items
-    .map((item: Item) =>
-      item.type === 'markup' ? unitMarkup(item) : unitText(item)
-    )
-    .join('');
+  const items =
+    'items' in parsed
+      ? parsed.items
+          .map((item: Item) =>
+            item.type === 'markup' ? unitMarkup(item) : unitText(item)
+          )
+          .join('')
+      : '';
+
+  xliffTags[1].start = `<file  datatype="plaintext" source-language="${
+    parsed.source_language ?? ''
+  }" target-language="${parsed.target_language ?? ''}">`;
 
   return xmlFormat(addTags(xliffTags, items));
 };

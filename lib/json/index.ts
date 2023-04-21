@@ -19,8 +19,8 @@ const convertToJSon = (input: fs.PathOrFileDescriptor) => {
   const items = parseItems(data);
 
   return stringify({
-    source_language: tags.source_language,
-    target_language: tags.target_language,
+    source_language: data.match(/source-language="([^"]*)"/)[1] ?? '',
+    target_language: data.match(/target-language="([^"]*)"/)[1] ?? '',
     version: tags.version,
     exported: tags.exported,
     items: items,
