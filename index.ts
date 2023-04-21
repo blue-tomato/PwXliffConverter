@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import { checkFileExists, saveAsFile } from './helpers';
-import { convertToJson, convertToXliff } from './lib';
+import convert from './lib';
 import colors from 'colors';
-import path from 'path';
 
 require('yargs')
   .command({
@@ -18,11 +17,8 @@ require('yargs')
     },
     handler({ file }: { file: string }) {
       checkFileExists(file);
-      const ext = path.extname(file);
-      const newExt = ext === '.json' ? '.xlf' : '.json';
-      const data = ext === '.json' ? convertToXliff(file) : convertToJson(file);
-      const save = saveAsFile(file.replace(ext, newExt), data);
-
+      const newFile = convert(file);
+      const save = saveAsFile(newFile.path, newFile.data);
       if (save) console.log(colors.magenta('File saved successfully'));
     },
   })
