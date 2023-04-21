@@ -17,8 +17,8 @@ require('yargs')
     },
     handler({ file }: { file: string }) {
       checkFileExists(file);
-      const newFile = convert(file);
-      const save = saveAsFile(newFile.path, newFile.data);
+      const { path, data } = convert(file);
+      const save = saveAsFile(path, data);
       if (save) console.log(colors.magenta('File saved successfully'));
     },
   })

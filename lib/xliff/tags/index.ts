@@ -28,4 +28,18 @@ const xliffTags = [
   },
 ];
 
-export { xliffTags, Tag };
+const updateTags = (parsed: {
+  version: string;
+  source_language: string;
+  target_language: string;
+}) => {
+  xliffTags[0].start = `<?xml version="${
+    parsed.version ?? ''
+  }" encoding="UTF-8"?>`;
+
+  xliffTags[2].start = `<file  datatype="plaintext" source-language="${
+    parsed.source_language ?? ''
+  }" target-language="${parsed.target_language ?? ''}">`;
+};
+
+export { xliffTags, updateTags, Tag };

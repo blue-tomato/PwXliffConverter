@@ -16,6 +16,23 @@ type Data = {
   }[];
 };
 
+type Item = { '@_id': string; source: string; target: string };
+
+const extractItems = (body: Item[]) => {
+  return body?.map((item) => {
+    const id = item['@_id'] ? item['@_id'].split('-') : [];
+    if (!id.length) return;
+
+    return {
+      page: +id[0],
+      field: id[1],
+      type: id[2],
+      source: item.source,
+      target: item.target,
+    };
+  });
+};
+
 const stringify = (input: Data) => {
   return JSON.stringify(input, null, 4);
 };
@@ -23,27 +40,12 @@ const stringify = (input: Data) => {
 const convertToJSon = (input: fs.PathOrFileDescriptor) => {
   const data = fs.readFileSync(input, 'utf8');
 
-  const parser = new XMLParser({
+  const parsed = new XMLParser({
     ignoreAttributes: false,
-  });
-
-  const parsed = parser.parse(data);
+  }).parse(data);
 
   const body = (parsed.xliff.file.body || {})['trans-unit'];
-  const items = body?.map(
-    (item: { ['@_id']: string; source: string; target: string }) => {
-      const id = item['@_id'] ? item['@_id'].split('-') : [];
-      if (!id.length) return;
-
-      return {
-        page: +id[0],
-        field: id[1],
-        type: id[2],
-        source: item.source,
-        target: item.target,
-      };
-    }
-  );
+  const items = extractItems(body);
 
   return stringify({
     source_language: (parsed.xliff.file || {})['@_source-language'],

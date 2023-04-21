@@ -1,5 +1,5 @@
-import convertToXliff from './Xliff';
-import convertToJson from './Json';
+import convertToXliff from './xliff';
+import convertToJson from './json';
 import path from 'path';
 
 const convert = (file: string) => {
