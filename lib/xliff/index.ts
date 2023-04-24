@@ -1,5 +1,5 @@
-import { unitMarkup, unitText, Item } from './items';
 import { xliffTags, updateTags, Tag } from './tags';
+import { unitMarkup, Item } from './items';
 import xmlFormat from 'xml-formatter';
 import fs from 'fs';
 
@@ -16,11 +16,7 @@ const convertToXliff = (input: string) => {
 
   const items =
     'items' in parsed
-      ? parsed.items
-          .map((item: Item) =>
-            item.type === 'markup' ? unitMarkup(item) : unitText(item)
-          )
-          .join('')
+      ? parsed.items.map((item: Item) => unitMarkup(item)).join('')
       : '';
 
   updateTags(parsed);

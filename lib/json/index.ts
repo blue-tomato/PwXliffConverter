@@ -20,7 +20,7 @@ type Item = { '@_id': string; source: string; target: string };
 
 const extractItems = (body: Item[]) => {
   return body?.map((item) => {
-    const id = item['@_id'] ? item['@_id'].split('-') : [];
+    const id = item['@_id'] ? item['@_id'].split('****') : [];
     if (!id.length) return;
 
     return {
@@ -34,7 +34,7 @@ const extractItems = (body: Item[]) => {
 };
 
 const stringify = (input: Data) => {
-  return JSON.stringify(input, null, 2);
+  return JSON.stringify(input, null, 4);
 };
 
 const convertToJSon = (input: fs.PathOrFileDescriptor) => {
