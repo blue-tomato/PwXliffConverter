@@ -8,7 +8,7 @@ type Data = {
   version: number;
   exported: string;
   items: {
-    page: number;
+    page: string | number;
     field: string;
     type: string;
     source: string;
@@ -24,7 +24,7 @@ const extractItems = (body: Item[]) => {
     if (!id.length) return;
 
     return {
-      page: +id[0],
+      page: Number(id[0]) ? Number(id[0]) : id[0],
       field: id[1],
       type: id[2],
       source: item.source,
@@ -34,7 +34,7 @@ const extractItems = (body: Item[]) => {
 };
 
 const stringify = (input: Data) => {
-  return JSON.stringify(input, null, 4);
+  return JSON.stringify(input, null, 2);
 };
 
 const convertToJSon = (input: fs.PathOrFileDescriptor) => {
