@@ -14,6 +14,9 @@ type Data = {
     source: string;
     target: string;
   }[];
+  fields: {
+    [key: string]: string;
+  };
 };
 
 type Item = { '@_id': string; source: string; target: string };
@@ -33,6 +36,17 @@ const extractItems = (body: Item[]) => {
   });
 };
 
+const extractFields = (fields: string[]): { [key: string]: string } => {
+  return Object.fromEntries(
+    new Map(
+      fields?.map((item: string) => {
+        const [key, value] = item.split('****');
+        return [key, value];
+      })
+    )
+  );
+};
+
 const stringify = (input: Data) => {
   return JSON.stringify(input, null, 4);
 };
@@ -44,15 +58,15 @@ const convertToJSon = (input: fs.PathOrFileDescriptor) => {
     ignoreAttributes: false,
   }).parse(data);
 
-  const body = (parsed.xliff.file.body || {})['trans-unit'];
-  const items = extractItems(body);
+  const body = parsed.xliff.file.body || {};
 
   return stringify({
     source_language: (parsed.xliff.file || {})['@_source-language'],
     target_language: (parsed.xliff.file || {})['@_target-language'],
     version: +parsed['?xml']['@_version'] ?? 1,
     exported: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
-    items: items,
+    items: extractItems(body['trans-unit']),
+    fields: extractFields(body['note']),
   });
 };
 

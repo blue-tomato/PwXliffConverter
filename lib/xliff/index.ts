@@ -19,9 +19,16 @@ const convertToXliff = (input: string) => {
       ? parsed.items.map((item: Item) => unitMarkup(item)).join('')
       : '';
 
+  const fields =
+    'fields' in parsed
+      ? Object.entries(parsed.fields)
+          .map(([key, value]) => `<note>${key}****${value}</note>`)
+          .join('')
+      : '';
+
   updateTags(parsed);
 
-  return xmlFormat(addTags(xliffTags, items));
+  return xmlFormat(addTags(xliffTags, items.concat(fields)));
 };
 
 export default convertToXliff;
