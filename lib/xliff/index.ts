@@ -14,6 +14,9 @@ const convertToXliff = (input: string) => {
   const data = fs.readFileSync(input, 'utf8');
   const parsed = JSON.parse(data);
 
+  const timestamp =
+    'exported' in parsed ? `<timestamp>${parsed.exported}</timestamp>` : '';
+
   const items =
     'items' in parsed
       ? parsed.items.map((item: Item) => unitMarkup(item)).join('')
@@ -26,9 +29,10 @@ const convertToXliff = (input: string) => {
           .join('')
       : '';
 
+  const content = timestamp.concat(items.concat(fields));
   updateTags(parsed);
 
-  return xmlFormat(addTags(xliffTags, items.concat(fields)));
+  return xmlFormat(addTags(xliffTags, content));
 };
 
 export default convertToXliff;

@@ -1,5 +1,4 @@
 import { XMLParser } from 'fast-xml-parser';
-import { format } from 'date-fns';
 import fs from 'fs';
 
 type Item = { '@_id': string; source: string; target: string };
@@ -38,14 +37,15 @@ const convertToJSon = (input: fs.PathOrFileDescriptor) => {
     processEntities: false,
   }).parse(data);
 
+  const header = parsed.xliff.file || {};
   const body = parsed.xliff.file.body || {};
 
   return JSON.stringify(
     {
-      source_language: (parsed.xliff.file || {})['@_source-language'],
-      target_language: (parsed.xliff.file || {})['@_target-language'],
+      source_language: header['@_source-language'],
+      target_language: header['@_target-language'],
       version: +parsed['?xml']['@_version'] ?? 1,
-      exported: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      exported: body['timestamp'],
       items: extractItems(body['trans-unit']),
       fields: extractFields(body['note']),
     },
