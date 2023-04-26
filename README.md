@@ -48,13 +48,12 @@ pwcvt convert --file <filename>
 Replace `<filename>` with the path of the ProcessWire JSON translation export file that you want to convert to XLIFF, or the name of the XLIFF file that you want to convert back to JSON.
 The converted file is located in the same folder as the original file.
 
-Be aware that if you already have a file with the same name in your folder, it will be overwritten.
-
 For example, to convert `translations.json` to `translations.xlf`, run the following command:
 
 ```
-node app convert --file <filename>
+node app convert --file `translations.json`
 ```
+Be aware that if you already have a file with the same name in your folder, it will be overwritten.
 
 ## Dependencies/Packages
 
