@@ -60,7 +60,6 @@ Be aware that if you already have a file with the same name in your folder, it w
 - [fast-xml-parser](https://www.npmjs.com/package/fast-xml-parser)
 - [xml-formatter](https://www.npmjs.com/package/xml-formatter)
 - [colors](https://www.npmjs.com/package/colors)
-- [vitest](https://www.npmjs.com/package/vitest)
 - [yargs](https://www.npmjs.com/package/yargs)
 
 ## Contributing

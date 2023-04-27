@@ -4,7 +4,6 @@
   "description": "Node.js CLI to convert ProcessWire JSON translation exports to XLIFF 1.2 and back",
   "main": "./app/index.js",
   "scripts": {
-    "test": "vitest",
     "build": "tsc"
   },
   "bin": {
@@ -20,7 +19,6 @@
     "colors": "^1.4.0",
     "fast-xml-parser": "^4.2.2",
     "typescript": "^5.0.4",
-    "vitest": "^0.30.1",
     "xml-formatter": "^3.3.2",
     "yargs": "^17.7.1"
   },
