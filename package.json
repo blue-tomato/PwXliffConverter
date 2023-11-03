@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.4.0",
-    "fast-xml-parser": "^4.2.2",
+    "fast-xml-parser": "^4.2.5",
     "typescript": "^5.0.4",
     "xml-formatter": "^3.3.2",
     "yargs": "^17.7.1"
